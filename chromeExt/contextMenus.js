@@ -13,6 +13,10 @@ var contextMenu = {
 	create: (arr) => {
 		for (let context of arr) chrome.contextMenus.create(context);
 	},
+	generate: (template, variants) => {
+		// contextMenu.generate({type: "normal", id: "parentSearch"}, [{name: "saucenao", onclick: console.log("a")}, {name: "iqdb", onclick: console.log("b")}]);
+		return variants.map((a) => ({...a, ...template}));
+	},
 	get: () => {
 		chrome.storage.local.get("contextMenus", ({contextMenus: contexts}) => {
 			for (let context in contexts) {
