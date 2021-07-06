@@ -28,10 +28,11 @@
 		.then((a) => JSON.parse(a.split("\n")[0]).data.node.group_member_feed)
 		.then((a) => ({
 			...a.page_info,
-			edges: a.edges.map((b) => ({
-				cursor: b.cursor,
-				postid: b.node.comet_sections.feedback.story.feedback_context.feedback_target_with_context.subscription_target_id
-			})),
+			edges: a.edges.reduce((ar, item) => ((item.node.comet_sections) ? ar.push({
+				cursor: item.cursor,
+				postid: item.node.comet_sections.feedback.story.feedback_context.feedback_target_with_context.subscription_target_id,
+				creation_time: (new Date(+JSON.stringify(item.node).match(/(?<=creation_time":\s?)\d+/g)[0] * 1000))
+			}) : "", ar), [])
 		}))
 		.then(console.log)
 })(100001401270561, 319914295441959);
