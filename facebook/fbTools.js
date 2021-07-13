@@ -518,7 +518,9 @@ console.log(fbTools);
 function cannedRes() {
 	let input = document.createElement("input"),
 		f = new FileReader(),
-		canned = document.querySelector("#cannedRes");
+		canned = document.querySelector("#cannedRes"),
+		utId = document.URL.match(/\d+$/g),
+		grUsr = (!!Array.from(document.querySelectorAll("span[dir='auto']")).filter((a) => a.innerHTML.includes("Chat Member")).length) ? "thread" : "user";
 	input.type = "file";
 	input.accept = "audio/*,image/*,video/*,text/*";
 	input.setAttribute("id", "fbTools")
@@ -526,13 +528,12 @@ function cannedRes() {
 		let res = e.path.pop().files[0];
 		f.onloadend = function(c) {
 			let blob = new Blob([c.target.result], {type: res.type});
-			canned.innerHTML = `CR: ~${(blob.size / (1024*1024)).toFixed(2)} MB(s) | ${blob.type}`;
+			canned.innerHTML = `CR: ~${(blob.size / (1024*1024)).toFixed(2)} MB(s) | ${blob.type} | ${utId}`;
 			fbTools.upload(blob).then((r) => {
 				let res = r[0], typ = res.filetype.match(/\w+/g)[0],
-					obj = {},
-					utId = document.URL.match(/\d+$/g);
+					obj = {};
 				canned.innerHTML = `CR: Received ${res.fbid}`;
-				obj[ (!!Array.from(document.querySelectorAll("span[dir='auto']")).filter((a) => a.innerHTML.includes("Chat Member")).length) ? "thread" : "user" ] = utId.pop();
+				obj[grUsr] = utId.pop();
 				obj[typ] = res[`${typ}_id`];
 				fbTools.conversation.chat(obj);
 				canned.innerHTML = "Canned Response";
