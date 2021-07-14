@@ -1,0 +1,11 @@
+Server's /etc/ssh/sshd_config:
+
+1. To enable password authentication, uncomment
+#PasswordAuthentication yes
+
+2. To enable root login, uncomment
+#PermitRootLogin yes
+
+3. To enable ssh key login, uncomment
+#PubkeyAuthentication yes
+#AuthorizedKeysFile .ssh/authorized_keys

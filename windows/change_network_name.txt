@@ -1,0 +1,8 @@
+Regedit:
+Sub-key of:
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles\
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles\*\ProfileName
+
+Local Security Policy (Maybe LAN only):
+Win+R > secpol.msc > Network List Manager Policies > Network Name
